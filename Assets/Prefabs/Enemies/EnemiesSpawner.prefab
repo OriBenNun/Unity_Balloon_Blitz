@@ -44,4 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9170bc039b63c83459c1da07fedadbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxYSpawn: 4
+  minYSpawn: -2
+  rightSideSpawnX: 3.5
+  leftSideSpawnX: -3.5
+  spawnFrequency: 2.5
   birdEnemyPrefab: {fileID: 5593546133303373133, guid: 4f8713eb34eb2a747a6bdabef76cfc75, type: 3}
