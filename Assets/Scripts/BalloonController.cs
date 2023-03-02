@@ -3,11 +3,10 @@ using UnityEngine;
 public class BalloonController : MonoBehaviour
 {
 
-    private Rigidbody2D _rb2d;
-    private Transform _transform;
 
     [SerializeField] private TemperatureBar temperatureBar;
     
+    [SerializeField] private float fireTapBoostForce = 1.5f;
     [SerializeField] private float upFireForce = 0.3f;
     [SerializeField] private float turnForce = 0.3f;
     [SerializeField] private float disableFireForceYHeight = 4.7f;
@@ -17,33 +16,47 @@ public class BalloonController : MonoBehaviour
     [SerializeField] private float turnForceTempChange = 0.3f;
     [SerializeField] private float turnDragWhenIdle = 0.3f;
 
+    private Rigidbody2D _rb2d;
+    private Transform _transform;
+
+    private Vector2 _forceToApplyByInput;
+    private bool _shouldApplyBoost = false;
+    
     private void Start()
-    {
+    {                                                               
         _rb2d = GetComponent<Rigidbody2D>();
         _transform = GetComponent<Transform>();
     }
-
+                                                
     private void FixedUpdate()
     {
-        ApplyMovementByInput();
+        AddMovementForceAndUpdateTemperature(_forceToApplyByInput);
     }
 
     private void Update()
     {
+        RecordInput();
+        
         if (_transform.position.y <= deathYHeight)
         {
             Death();
         }
     }
 
-    private void ApplyMovementByInput()
+    private void RecordInput()
     {
+        
         var xForce = 0f;
         var yForce = 0f;
+        
+        if (Input.GetKeyDown(KeyCode.Space) && _transform.position.y <= disableFireForceYHeight)
+        {
+            _shouldApplyBoost = true;
+        }
 
         if (Input.GetKey(KeyCode.Space) && _transform.position.y <= disableFireForceYHeight)
         {
-            yForce = upFireForce;
+            yForce += upFireForce;
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -55,7 +68,7 @@ public class BalloonController : MonoBehaviour
             xForce = turnForce;
         }
 
-        AddMovementForceAndUpdateTemperature(new Vector2(xForce, yForce));
+        _forceToApplyByInput = new Vector2(xForce, yForce);
     }
     
     private void Death()
@@ -63,17 +76,31 @@ public class BalloonController : MonoBehaviour
         print("DEAD!");
         _transform.position = new Vector3(0, 0, 0);
         _rb2d.velocity = new Vector2(0, 0);
+        _forceToApplyByInput = new Vector2(0, 0);
+        
+        temperatureBar.ResetTemperature();
     }
 
     private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)
     {
 
-        _rb2d.AddForce(force, forceMode2D);
+        var updatedForce = force;
+
+        if (_shouldApplyBoost)
+        {
+            updatedForce.y += fireTapBoostForce;
+            
+            _shouldApplyBoost = false; // Reset the state
+            
+            print("APPLIED FORCE! " + updatedForce);
+        }
+        
+        _rb2d.AddForce(updatedForce, forceMode2D);
         
         // Adding drag to the horizontal movement for easier control
-        Vector2 velocity = _rb2d.velocity;
+        var velocity = _rb2d.velocity;
         
-        if (force.x == 0 && velocity.x != 0)
+        if (updatedForce.x == 0 && velocity.x != 0)
         {
             if (velocity.x > 0)
             {
@@ -87,7 +114,7 @@ public class BalloonController : MonoBehaviour
             _rb2d.velocity = velocity;
         }
 
-        UpdateTemperature(force);
+        UpdateTemperature(updatedForce);
     }
 
     private void UpdateTemperature(Vector2 force)
@@ -95,7 +122,6 @@ public class BalloonController : MonoBehaviour
         // float multiplyFactor = 1;
         if (force.y > 0)
         {
-            print(force.y);
             temperatureBar.ChangeCurrentTemperature(force.y * upForceTempChangeMultiplier);
         }
         else if (force.y == 0)
