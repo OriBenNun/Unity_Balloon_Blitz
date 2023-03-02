@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class EnemiesSpawner : MonoBehaviour
 {
-    [SerializeField] private GameObject birdEnemyPrefab;
 
+    [Header("Constraints Config")]
     [SerializeField] private float maxYSpawn = 4.7f;
     [SerializeField] private float minYSpawn = 2f;
     [SerializeField] private float rightSideSpawnX = 4f;
     [SerializeField] private float leftSideSpawnX = -4f;
+
+    [Header("Bird Enemy")]
+    [SerializeField] private float spawnFrequency = 2.5f;
+    [SerializeField] private GameObject birdEnemyPrefab;
 
     private List<GameObject> _spawnedEnemies;
     private void Start()
