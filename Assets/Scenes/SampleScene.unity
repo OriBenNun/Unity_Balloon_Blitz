@@ -431,7 +431,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: turnForce
-      value: 0.2
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: upFireForce
