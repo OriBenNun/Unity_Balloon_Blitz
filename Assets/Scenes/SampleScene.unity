@@ -686,6 +686,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78fa2aca1cd392b4fac70fd63d58ed8a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fillImage: {fileID: 472312035}
+  initialTemperature: 40
 --- !u!114 &1889390796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +735,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 100
   m_WholeNumbers: 0
-  m_Value: 0.307
+  m_Value: 0
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -855,7 +857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: turnForce
-      value: 0.5
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: upFireForce
@@ -866,16 +868,20 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1889390795}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
+      propertyPath: turnDragWhenIdle
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: freeFallTempChange
-      value: 0.25
+      value: 0.45
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: turnForceTempChange
-      value: 0.3
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: upForceTempChangeMultiplier
-      value: 1.3
+      value: 1.4
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719825, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: m_Name
