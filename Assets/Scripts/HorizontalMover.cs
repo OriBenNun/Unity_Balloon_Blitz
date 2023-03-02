@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Bird : MonoBehaviour, IEnemy
+public class HorizontalMover : MonoBehaviour, IEnemy
 {
     public bool isDirectionRight { get; set; }
 
