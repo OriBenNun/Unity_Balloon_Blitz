@@ -5,11 +5,17 @@ public class BalloonController : MonoBehaviour
 
     private Rigidbody2D _rb2d;
     private Transform _transform;
+
+    [SerializeField] private TemperatureBar temperatureBar;
     
     [SerializeField] private float upFireForce = 0.3f;
     [SerializeField] private float turnForce = 0.3f;
     [SerializeField] private float disableFireForceYHeight = 4.7f;
     [SerializeField] private float deathYHeight = -4.7f;
+    [SerializeField] private float upForceTempChangeMultiplier = 3f;
+    [SerializeField] private float freeFallTempChange = 1f;
+    [SerializeField] private float turnForceTempChange = 0.3f;
+    [SerializeField] private float turnDragWhenIdle = 0.3f;
 
     private void Start()
     {
@@ -49,7 +55,7 @@ public class BalloonController : MonoBehaviour
             xForce = turnForce;
         }
 
-        _rb2d.AddForce(new Vector2(xForce, yForce), ForceMode2D.Impulse);
+        AddMovementForceAndUpdateTemperature(new Vector2(xForce, yForce));
     }
     
     private void Death()
@@ -57,5 +63,49 @@ public class BalloonController : MonoBehaviour
         print("DEAD!");
         _transform.position = new Vector3(0, 0, 0);
         _rb2d.velocity = new Vector2(0, 0);
+    }
+
+    private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)
+    {
+
+        _rb2d.AddForce(force, forceMode2D);
+        
+        // Adding drag to the horizontal movement for easier control
+        Vector2 velocity = _rb2d.velocity;
+        
+        if (force.x == 0 && velocity.x != 0)
+        {
+            if (velocity.x > 0)
+            {
+                velocity.x -= turnDragWhenIdle;
+            }
+            else
+            {
+                velocity.x += turnDragWhenIdle;
+            }
+            
+            _rb2d.velocity = velocity;
+        }
+
+        UpdateTemperature(force);
+    }
+
+    private void UpdateTemperature(Vector2 force)
+    {
+        // float multiplyFactor = 1;
+        if (force.y > 0)
+        {
+            print(force.y);
+            temperatureBar.ChangeCurrentTemperature(force.y * upForceTempChangeMultiplier);
+        }
+        else if (force.y == 0)
+        {
+            temperatureBar.ChangeCurrentTemperature(-freeFallTempChange);
+        }
+
+        if (force.x != 0)
+        {
+            temperatureBar.ChangeCurrentTemperature(turnForceTempChange);
+        }
     }
 }
