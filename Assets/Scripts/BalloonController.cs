@@ -42,6 +42,16 @@ public class BalloonController : MonoBehaviour
             Death();
         }
     }
+    
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        print("OnTriggerEnter2D " + other);
+        var enemy = other.GetComponent<IEnemy>();
+        if (enemy == null) return;
+        
+        Death();
+    }
+
 
     private void RecordInput()
     {
@@ -79,6 +89,10 @@ public class BalloonController : MonoBehaviour
         _forceToApplyByInput = new Vector2(0, 0);
         
         temperatureBar.ResetTemperature();
+
+        var enemiesSpawner = FindObjectOfType<EnemiesSpawner>();
+        
+        enemiesSpawner.DestroySpawnedEnemies();
     }
 
     private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)
@@ -91,8 +105,6 @@ public class BalloonController : MonoBehaviour
             updatedForce.y += fireTapBoostForce;
             
             _shouldApplyBoost = false; // Reset the state
-            
-            print("APPLIED FORCE! " + updatedForce);
         }
         
         _rb2d.AddForce(updatedForce, forceMode2D);
