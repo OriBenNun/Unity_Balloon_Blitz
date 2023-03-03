@@ -7,13 +7,16 @@ public class TemperatureBar : MonoBehaviour
     
     [SerializeField] private Image fillImage;
     [SerializeField] private float initialTemperature = 40f;
+    [SerializeField] private int maxValue = 100;
 
     private Gradient _temperatureGradient;
+    public static event TemperatureReachedMaxDelegate TemperatureReachedMax;
     
     private void Start()
     {
         _slider = GetComponent<Slider>();
         _slider.value = initialTemperature;
+        _slider.maxValue = maxValue;
         
         _temperatureGradient = new Gradient();
 
@@ -36,7 +39,19 @@ public class TemperatureBar : MonoBehaviour
     {
         _slider.value += valueToAdd;
         fillImage.color = _temperatureGradient.Evaluate(_slider.normalizedValue);
+
+        if (_slider.value >= maxValue)
+        {
+            OnTemperatureReachedMax();
+        }
     }
 
     public void ResetTemperature() => _slider.value = initialTemperature;
+
+    private static void OnTemperatureReachedMax()
+    {
+        TemperatureReachedMax?.Invoke();
+    }
 }
+
+public delegate void TemperatureReachedMaxDelegate();
