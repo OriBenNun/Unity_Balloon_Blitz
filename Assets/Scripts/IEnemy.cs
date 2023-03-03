@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IEnemy
 {
-    bool isDirectionRight { get; set; }
+    
 }
