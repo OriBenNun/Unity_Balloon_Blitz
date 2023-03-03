@@ -137,14 +137,15 @@ public class BalloonController : MonoBehaviour
 
     private void UpdateTemperature(Vector2 force)
     {
-        // float multiplyFactor = 1;
-        if (force.y > 0)
+        switch (force.y)
         {
-            temperatureBar.ChangeCurrentTemperature(force.y * upForceTempChangeMultiplier);
-        }
-        else if (force.y == 0)
-        {
-            temperatureBar.ChangeCurrentTemperature(-freeFallTempChange);
+            // float multiplyFactor = 1;
+            case > 0:
+                temperatureBar.ChangeCurrentTemperature(force.y * upForceTempChangeMultiplier);
+                break;
+            case 0:
+                temperatureBar.ChangeCurrentTemperature(-freeFallTempChange);
+                break;
         }
 
         if (force.x != 0)
