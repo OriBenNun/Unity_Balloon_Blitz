@@ -1,15 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class BalloonController : MonoBehaviour
 {
 
 
+    [Header("References")]
     [SerializeField] private TemperatureBar temperatureBar;
+    [FormerlySerializedAs("enemiesSpawner")] [SerializeField] private ObstaclesSpawner obstaclesSpawner;
     
     [SerializeField] private float fireTapBoostForce = 1.5f;
     [SerializeField] private float upFireForce = 0.3f;
     [SerializeField] private float turnForce = 0.3f;
-    [SerializeField] private float deathYHeight = -4.7f;
+    [SerializeField] private float deathYHeight = 10f;
     [SerializeField] private float upForceTempChangeMultiplier = 3f;
     [SerializeField] private float freeFallTempChange = 1f;
     [SerializeField] private float turnForceTempChange = 0.3f;
@@ -20,7 +23,19 @@ public class BalloonController : MonoBehaviour
     private Transform _transform;
 
     private Vector2 _forceToApplyByInput;
-    private bool _shouldApplyBoost = false;
+    private bool _shouldApplyBoost;
+
+    private float _bestHeightYValue;
+    
+    private void OnEnable()
+    {
+        TemperatureBar.TemperatureReachedMax += Death;
+    }
+
+    private void OnDisable()
+    {
+        TemperatureBar.TemperatureReachedMax -= Death;
+    }
     
     private void Start()
     {                                                               
@@ -37,7 +52,7 @@ public class BalloonController : MonoBehaviour
     {
         RecordInput();
         
-        if (_transform.position.y <= deathYHeight)
+        if (_bestHeightYValue - _transform.position.y >= deathYHeight)
         {
             Death();
         }
@@ -45,7 +60,6 @@ public class BalloonController : MonoBehaviour
     
     private void OnTriggerEnter2D(Collider2D other)
     {
-        print("OnTriggerEnter2D " + other);
         var obstacle = other.GetComponent<IObstacle>();
         if (obstacle == null) return;
         
@@ -87,16 +101,21 @@ public class BalloonController : MonoBehaviour
         _transform.position = new Vector3(0, 0, 0);
         _rb2d.velocity = new Vector2(0, 0);
         _forceToApplyByInput = new Vector2(0, 0);
+        _shouldApplyBoost = false;
+        _bestHeightYValue = 4f;
         
         temperatureBar.ResetTemperature();
-
-        var enemiesSpawner = FindObjectOfType<ObstaclesSpawner>();
         
-        enemiesSpawner.DestroySpawnedObstacles();
+        obstaclesSpawner.DestroySpawnedObstacles();
     }
 
     private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)
     {
+        
+        if (_transform.position.y > _bestHeightYValue)
+        {
+            _bestHeightYValue = _transform.position.y;
+        }
 
         var updatedForce = force;
 
