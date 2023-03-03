@@ -302,8 +302,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1885471485}
-  smoothTime: 0.1
-  lerpTime: 0.1
+  smoothTime: 0.3
 --- !u!1001 &809754696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -896,6 +895,10 @@ PrefabInstance:
       propertyPath: temperatureBar
       value: 
       objectReference: {fileID: 1889390795}
+    - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
+      propertyPath: maxVelocityMagnitude
+      value: 4.5
+      objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719825, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: m_Name
       value: Balloon

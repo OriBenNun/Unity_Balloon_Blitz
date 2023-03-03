@@ -9,12 +9,12 @@ public class BalloonController : MonoBehaviour
     [SerializeField] private float fireTapBoostForce = 1.5f;
     [SerializeField] private float upFireForce = 0.3f;
     [SerializeField] private float turnForce = 0.3f;
-    [SerializeField] private float disableFireForceYHeight = 4.7f;
     [SerializeField] private float deathYHeight = -4.7f;
     [SerializeField] private float upForceTempChangeMultiplier = 3f;
     [SerializeField] private float freeFallTempChange = 1f;
     [SerializeField] private float turnForceTempChange = 0.3f;
     [SerializeField] private float turnDragWhenIdle = 0.3f;
+    [SerializeField] private float maxVelocityMagnitude = 5f;
 
     private Rigidbody2D _rb2d;
     private Transform _transform;
@@ -108,6 +108,12 @@ public class BalloonController : MonoBehaviour
         }
         
         _rb2d.AddForce(updatedForce, forceMode2D);
+        
+        // Limit the velocity magnitude
+        if (_rb2d.velocity.magnitude > maxVelocityMagnitude)
+        {
+            _rb2d.velocity = _rb2d.velocity.normalized * maxVelocityMagnitude;
+        }
         
         // Adding drag to the horizontal movement for easier control
         var velocity = _rb2d.velocity;
