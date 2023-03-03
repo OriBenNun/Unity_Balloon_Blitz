@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class BalloonController : MonoBehaviour
@@ -24,12 +25,9 @@ public class BalloonController : MonoBehaviour
 
     private Vector2 _forceToApplyByInput;
     private bool _shouldApplyBoost;
+    private PlayerInput _playerInput;
 
     private float _bestHeightYValue;
-
-    private bool _isFireUpButtonDown = false;
-    private bool _isMoveLeftButtonDown = false;
-    private bool _isMoveRightButtonDown = false;
     
     private void OnEnable()
     {
@@ -45,6 +43,7 @@ public class BalloonController : MonoBehaviour
     {                                                               
         _rb2d = GetComponent<Rigidbody2D>();
         _transform = GetComponent<Transform>();
+        _playerInput = GetComponent<PlayerInput>();
     }
                                                 
     private void FixedUpdate()
@@ -77,28 +76,29 @@ public class BalloonController : MonoBehaviour
         var xForce = 0f;
         var yForce = 0f;
         
-        if (Input.GetKeyDown(KeyCode.Space))
+        // Read input values from the Input System
+        var inputActions = _playerInput.actions;
+        
+        if (inputActions["Fire_Up"].triggered)
         {
             _shouldApplyBoost = true;
         }
 
-        if (Input.GetKey(KeyCode.Space) || _isFireUpButtonDown)
+        if (inputActions["Fire_Up"].inProgress)
         {
             yForce += upFireForce;
-            // _isFireUpButtonDown = false;
         }
-
-        if (Input.GetKey(KeyCode.A) || _isMoveLeftButtonDown)
+        
+        if (inputActions["Move_Left"].inProgress)
         {
+            print("3");
             xForce = -turnForce;
-            _isMoveLeftButtonDown = false;
         }
-        else if (Input.GetKey(KeyCode.D) || _isMoveRightButtonDown)
+        else if (inputActions["Move_Right"].inProgress)
         {
             xForce = turnForce;
-            _isMoveRightButtonDown = false;
         }
-
+        
         _forceToApplyByInput = new Vector2(xForce, yForce);
     }
     
@@ -134,8 +134,6 @@ public class BalloonController : MonoBehaviour
         }
         
         _rb2d.AddForce(updatedForce, forceMode2D);
-
-        _isFireUpButtonDown = false;
 
         // Limit the velocity magnitude
         if (_rb2d.velocity.magnitude > maxVelocityMagnitude)
@@ -182,11 +180,11 @@ public class BalloonController : MonoBehaviour
         }
     }
 
-    public void OnFireUpButtonClicked() => _shouldApplyBoost = true;
-    public void OnFireUpButtonDown() {
-        _isFireUpButtonDown = true;
-        print("HEY!!");
-    }
-    public void OnMoveLeftButtonDown() => _isMoveLeftButtonDown = true;
-    public void OnMoveRightButtonDown() => _isMoveRightButtonDown = true;
+    // public void OnFireUpButtonClicked() => _shouldApplyBoost = true;
+    // public void OnFireUpButtonDown() {
+    //     _isFireUpButtonDown = true;
+    //     print("HEY!!");
+    // }
+    // public void OnMoveLeftButtonDown() => _isMoveLeftButtonDown = true;
+    // public void OnMoveRightButtonDown() => _isMoveRightButtonDown = true;
 }
