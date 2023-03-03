@@ -41,7 +41,7 @@ public class BalloonController : MonoBehaviour
         TemperatureBar.TemperatureReachedMax -= Death;
     }
     
-    private void Start()
+    private void Awake()
     {                                                               
         _rb2d = GetComponent<Rigidbody2D>();
         _transform = GetComponent<Transform>();
