@@ -32,6 +32,7 @@ public class ObstaclesSpawner : MonoBehaviour
             SpawnBirdObstacle();
             yield return new WaitForSeconds(cooldown);
         }
+        // ReSharper disable once IteratorNeverReturns
     }
 
     private void SpawnBirdObstacle()
@@ -47,7 +48,7 @@ public class ObstaclesSpawner : MonoBehaviour
 
         var bird = Instantiate(birdPrefab, spawnPosition, Quaternion.identity, transform);
 
-        bird.GetComponent<HorizontalMover>().isDirectionRight = isRandomDirectionRight;
+        bird.GetComponent<HorizontalMover>().IsDirectionRight = isRandomDirectionRight;
         
         _spawnedObstacles.Add(bird);
     }
