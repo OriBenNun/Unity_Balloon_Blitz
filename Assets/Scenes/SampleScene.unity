@@ -204,6 +204,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 472312033}
   m_CullTransparentMesh: 1
+--- !u!114 &501934582 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 952296896, guid: dd9cb58bd0d23804b8ff8a30e8b713cb, type: 3}
+  m_PrefabInstance: {fileID: 4562619191785937240}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9170bc039b63c83459c1da07fedadbab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,7 +313,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 1885471485}
-  smoothTime: 0.3
+  smoothTime: 1
 --- !u!1001 &809754696
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -708,6 +719,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fillImage: {fileID: 472312035}
   initialTemperature: 40
+  maxValue: 100
 --- !u!114 &1889390796
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -892,12 +904,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
+      propertyPath: deathYHeight
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: temperatureBar
       value: 
       objectReference: {fileID: 1889390795}
     - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
+      propertyPath: obstaclesSpawner
+      value: 
+      objectReference: {fileID: 501934582}
+    - target: {fileID: 2487991499658719824, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: maxVelocityMagnitude
-      value: 4.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2487991499658719825, guid: cd8b8b40e23cd204289e263d446b721b, type: 3}
       propertyPath: m_Name
