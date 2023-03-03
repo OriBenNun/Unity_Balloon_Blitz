@@ -91,7 +91,6 @@ public class BalloonController : MonoBehaviour
         
         if (inputActions["Move_Left"].inProgress)
         {
-            print("3");
             xForce = -turnForce;
         }
         else if (inputActions["Move_Right"].inProgress)
@@ -113,7 +112,7 @@ public class BalloonController : MonoBehaviour
         
         temperatureBar.ResetTemperature();
         
-        obstaclesSpawner.DestroySpawnedObstacles();
+        obstaclesSpawner.DestroyAllSpawnedObstacles();
     }
 
     private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)
@@ -179,12 +178,4 @@ public class BalloonController : MonoBehaviour
             temperatureBar.ChangeCurrentTemperature(turnForceTempChange);
         }
     }
-
-    // public void OnFireUpButtonClicked() => _shouldApplyBoost = true;
-    // public void OnFireUpButtonDown() {
-    //     _isFireUpButtonDown = true;
-    //     print("HEY!!");
-    // }
-    // public void OnMoveLeftButtonDown() => _isMoveLeftButtonDown = true;
-    // public void OnMoveRightButtonDown() => _isMoveRightButtonDown = true;
 }
