@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class HorizontalMover : MonoBehaviour, IObstacle
 {
-    public bool isDirectionRight { get; set; }
+    public bool IsDirectionRight { get; set; }
 
     private Transform _transform;
 
@@ -20,7 +20,7 @@ public class HorizontalMover : MonoBehaviour, IObstacle
     void Update()
     {
         var newPosition = _prevPosition;
-        if (isDirectionRight)
+        if (IsDirectionRight)
         {
             newPosition.x += moveSpeed * Time.deltaTime;
         }
