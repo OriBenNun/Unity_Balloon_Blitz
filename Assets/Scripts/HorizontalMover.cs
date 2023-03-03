@@ -10,7 +10,7 @@ public class HorizontalMover : MonoBehaviour, IObstacle
 
     private Vector3 _prevPosition;
 
-    private void Start()
+    private void Awake()
     {
         _transform = GetComponent<Transform>();
         _prevPosition = _transform.position;
@@ -33,4 +33,8 @@ public class HorizontalMover : MonoBehaviour, IObstacle
         _prevPosition = newPosition;
     }
 
+    public void Die(float waitSeconds)
+    {
+        Destroy(gameObject, waitSeconds);
+    }
 }
