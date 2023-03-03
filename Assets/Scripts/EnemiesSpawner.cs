@@ -12,14 +12,16 @@ public class EnemiesSpawner : MonoBehaviour
     [SerializeField] private float leftSideSpawnX = -4f;
 
     [Header("Bird Enemy")]
-    [SerializeField] private float spawnFrequency = 2.5f;
+    [SerializeField] private float spawnFrequencyMax = 5f;
+    [SerializeField] private float spawnFrequencyMin = 1.5f;
     [SerializeField] private GameObject birdEnemyPrefab;
 
     private List<GameObject> _spawnedEnemies;
     private void Start()
     {
         _spawnedEnemies = new List<GameObject>();
-        StartCoroutine(SpawnBirdsRoutine(1));
+        var spawnFrequency = Random.Range(spawnFrequencyMin, spawnFrequencyMax);
+        StartCoroutine(SpawnBirdsRoutine(spawnFrequency));
     }
     
     private IEnumerator SpawnBirdsRoutine(float cooldown = 3f)
@@ -44,7 +46,7 @@ public class EnemiesSpawner : MonoBehaviour
 
         var bird = Instantiate(birdEnemyPrefab, spawnPosition, Quaternion.identity, transform);
 
-        bird.GetComponent<IEnemy>().isDirectionRight = isRandomDirectionRight;
+        bird.GetComponent<HorizontalMover>().isDirectionRight = isRandomDirectionRight;
         
         _spawnedEnemies.Add(bird);
     }
