@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class HorizontalMover : MonoBehaviour, IEnemy
+public class HorizontalMover : MonoBehaviour, IObstacle
 {
     public bool isDirectionRight { get; set; }
 

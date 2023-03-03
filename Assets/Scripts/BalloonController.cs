@@ -46,8 +46,8 @@ public class BalloonController : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         print("OnTriggerEnter2D " + other);
-        var enemy = other.GetComponent<IEnemy>();
-        if (enemy == null) return;
+        var obstacle = other.GetComponent<IObstacle>();
+        if (obstacle == null) return;
         
         Death();
     }
@@ -59,12 +59,12 @@ public class BalloonController : MonoBehaviour
         var xForce = 0f;
         var yForce = 0f;
         
-        if (Input.GetKeyDown(KeyCode.Space) && _transform.position.y <= disableFireForceYHeight)
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _shouldApplyBoost = true;
         }
 
-        if (Input.GetKey(KeyCode.Space) && _transform.position.y <= disableFireForceYHeight)
+        if (Input.GetKey(KeyCode.Space))
         {
             yForce += upFireForce;
         }
@@ -90,9 +90,9 @@ public class BalloonController : MonoBehaviour
         
         temperatureBar.ResetTemperature();
 
-        var enemiesSpawner = FindObjectOfType<EnemiesSpawner>();
+        var enemiesSpawner = FindObjectOfType<ObstaclesSpawner>();
         
-        enemiesSpawner.DestroySpawnedEnemies();
+        enemiesSpawner.DestroySpawnedObstacles();
     }
 
     private void AddMovementForceAndUpdateTemperature(Vector2 force, ForceMode2D forceMode2D = ForceMode2D.Impulse)

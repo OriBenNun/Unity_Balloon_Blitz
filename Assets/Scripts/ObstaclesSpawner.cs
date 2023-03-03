@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class EnemiesSpawner : MonoBehaviour
+public class ObstaclesSpawner : MonoBehaviour
 {
 
     [Header("Constraints Config")]
@@ -11,15 +12,15 @@ public class EnemiesSpawner : MonoBehaviour
     [SerializeField] private float rightSideSpawnX = 4f;
     [SerializeField] private float leftSideSpawnX = -4f;
 
-    [Header("Bird Enemy")]
+    [Header("Bird")]
     [SerializeField] private float spawnFrequencyMax = 5f;
     [SerializeField] private float spawnFrequencyMin = 1.5f;
-    [SerializeField] private GameObject birdEnemyPrefab;
+    [FormerlySerializedAs("birdEnemyPrefab")] [SerializeField] private GameObject birdPrefab;
 
-    private List<GameObject> _spawnedEnemies;
+    private List<GameObject> _spawnedObstacles;
     private void Start()
     {
-        _spawnedEnemies = new List<GameObject>();
+        _spawnedObstacles = new List<GameObject>();
         var spawnFrequency = Random.Range(spawnFrequencyMin, spawnFrequencyMax);
         StartCoroutine(SpawnBirdsRoutine(spawnFrequency));
     }
@@ -28,12 +29,12 @@ public class EnemiesSpawner : MonoBehaviour
     {
         while (true)
         {
-            SpawnBirdEnemy();
+            SpawnBirdObstacle();
             yield return new WaitForSeconds(cooldown);
         }
     }
 
-    private void SpawnBirdEnemy()
+    private void SpawnBirdObstacle()
     {
         var isRandomDirectionRight = Random.value >= 0.5f;
         
@@ -44,22 +45,22 @@ public class EnemiesSpawner : MonoBehaviour
             Random.Range(minYSpawn, maxYSpawn),
             0f);
 
-        var bird = Instantiate(birdEnemyPrefab, spawnPosition, Quaternion.identity, transform);
+        var bird = Instantiate(birdPrefab, spawnPosition, Quaternion.identity, transform);
 
         bird.GetComponent<HorizontalMover>().isDirectionRight = isRandomDirectionRight;
         
-        _spawnedEnemies.Add(bird);
+        _spawnedObstacles.Add(bird);
     }
 
-    public void DestroySpawnedEnemies()
+    public void DestroySpawnedObstacles()
     {
-        if (_spawnedEnemies.Count == 0) return;
+        if (_spawnedObstacles.Count == 0) return;
         
-        foreach (var enemy in _spawnedEnemies)
+        foreach (var obstacle in _spawnedObstacles)
         {
-            Destroy(enemy);   
+            Destroy(obstacle);   
         }
         
-        _spawnedEnemies = new List<GameObject>();
+        _spawnedObstacles = new List<GameObject>();
     }
 }
