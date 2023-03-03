@@ -73,6 +73,14 @@ crashlytics-build.properties
 
 
 /Assets/BoilerPlate
+/Assets/Game GUI Vol1
+/Assets/TextMesh Pro
+
+/Assets/2DArt/PSD
+
 /ProjectSettings
 /Packages
 /.idea
+
+*.psd
+*.psd.meta
