@@ -26,6 +26,10 @@ public class BalloonController : MonoBehaviour
     private bool _shouldApplyBoost;
 
     private float _bestHeightYValue;
+
+    private bool _isFireUpButtonDown = false;
+    private bool _isMoveLeftButtonDown = false;
+    private bool _isMoveRightButtonDown = false;
     
     private void OnEnable()
     {
@@ -78,18 +82,21 @@ public class BalloonController : MonoBehaviour
             _shouldApplyBoost = true;
         }
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space) || _isFireUpButtonDown)
         {
             yForce += upFireForce;
+            // _isFireUpButtonDown = false;
         }
 
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || _isMoveLeftButtonDown)
         {
             xForce = -turnForce;
+            _isMoveLeftButtonDown = false;
         }
-        else if (Input.GetKey(KeyCode.D))
+        else if (Input.GetKey(KeyCode.D) || _isMoveRightButtonDown)
         {
             xForce = turnForce;
+            _isMoveRightButtonDown = false;
         }
 
         _forceToApplyByInput = new Vector2(xForce, yForce);
@@ -127,7 +134,9 @@ public class BalloonController : MonoBehaviour
         }
         
         _rb2d.AddForce(updatedForce, forceMode2D);
-        
+
+        _isFireUpButtonDown = false;
+
         // Limit the velocity magnitude
         if (_rb2d.velocity.magnitude > maxVelocityMagnitude)
         {
@@ -172,4 +181,12 @@ public class BalloonController : MonoBehaviour
             temperatureBar.ChangeCurrentTemperature(turnForceTempChange);
         }
     }
+
+    public void OnFireUpButtonClicked() => _shouldApplyBoost = true;
+    public void OnFireUpButtonDown() {
+        _isFireUpButtonDown = true;
+        print("HEY!!");
+    }
+    public void OnMoveLeftButtonDown() => _isMoveLeftButtonDown = true;
+    public void OnMoveRightButtonDown() => _isMoveRightButtonDown = true;
 }
