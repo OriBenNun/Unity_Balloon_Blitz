@@ -8,6 +8,7 @@ public class BalloonController : MonoBehaviour
 
     [Header("References")]
     [SerializeField] private TemperatureBar temperatureBar;
+    [SerializeField] private BalloonParticlesEmitter particlesEmitter;
     [FormerlySerializedAs("enemiesSpawner")] [SerializeField] private ObstaclesSpawner obstaclesSpawner;
     
     [SerializeField] private float fireTapBoostForce = 1.5f;
@@ -99,8 +100,10 @@ public class BalloonController : MonoBehaviour
         }
         
         _forceToApplyByInput = new Vector2(xForce, yForce);
+        
+        particlesEmitter.EmitParticles(xForce, yForce);
     }
-    
+
     private void Death()
     {
         print("DEAD!");
