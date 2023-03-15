@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class FollowPlayerPosition : MonoBehaviour
 {
-    
+    [SerializeField] private int zPosition = 0;
     [SerializeField] private Transform playerTransform;
     
     private void Start()
@@ -15,7 +15,7 @@ public class FollowPlayerPosition : MonoBehaviour
     {
         while (true)
         {
-            transform.position = new Vector3(0, playerTransform.position.y, 0);
+            transform.position = new Vector3(0, playerTransform.position.y, zPosition);
             yield return new WaitForSeconds(cooldown);
         }
         // ReSharper disable once IteratorNeverReturns
