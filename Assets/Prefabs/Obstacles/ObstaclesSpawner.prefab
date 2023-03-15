@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2584480662849598937}
   - component: {fileID: 952296896}
+  - component: {fileID: 1809133071}
   m_Layer: 0
   m_Name: ObstaclesSpawner
   m_TagString: Untagged
@@ -44,10 +45,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9170bc039b63c83459c1da07fedadbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxYSpawn: 4
-  minYSpawn: -2
+  spawnedParent: {fileID: 0}
+  autoKillAfterSeconds: 20
+  maxYSpawn: 7
+  minYSpawn: -5
   rightSideSpawnX: 3.5
   leftSideSpawnX: -3.5
-  spawnFrequencyMax: 3
+  spawnFrequencyMax: 2.5
   spawnFrequencyMin: 1
-  birdEnemyPrefab: {fileID: 5593546133303373133, guid: 4f8713eb34eb2a747a6bdabef76cfc75, type: 3}
+  scaleMax: 1
+  scaleMin: 0.4
+  birdPrefab: {fileID: 5593546133303373133, guid: 4f8713eb34eb2a747a6bdabef76cfc75, type: 3}
+--- !u!114 &1809133071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 877550690384462134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45689458d6d431747a812c18e58ae229, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  zPosition: 0
+  playerTransform: {fileID: 0}
