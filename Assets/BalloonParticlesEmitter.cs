@@ -22,7 +22,6 @@ public class BalloonParticlesEmitter : MonoBehaviour
         var horizontalMultiplier = Random.Range(horizontalMultiplierMin, horizontalMultiplierMax);
         var horizontalCount = (int)Math.Abs(horizontal * horizontalMultiplier);
 
-        print(horizontalCount);
         switch (horizontal)
         {
             case > 0:
