@@ -64,6 +64,8 @@ public class ObstaclesSpawner : MonoBehaviour
         var randomScale = Random.Range(scaleMin, scaleMax);
         birdObject.GetComponent<Transform>().localScale = new Vector3(randomScale, randomScale, randomScale);
 
+        birdObject.GetComponent<SpriteRenderer>().flipX = isRandomDirectionRight;
+        
         var birdObstacle = birdObject.GetComponent<IObstacle>();
         _spawnedObstacles.Add(birdObstacle);
 
